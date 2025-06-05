@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python数据分析学习游戏 - Xinru Wang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .score-item {
+            text-align: center;
+        }
+        
+        .score-item h3 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .score-item p {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .question-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .question-type {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .option.correct {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .option.incorrect {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .result-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .result-message.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .result-message.incorrect {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .final-score {
+            background: #667eea;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #667eea;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-board {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🐍 Python数据分析学习游戏</h1>
+            <p>结合数据科学与金融分析的Python学习之旅</p>
+        </div>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <h3 id="current-score">0</h3>
+                <p>当前分数</p>
+            </div>
+            <div class="score-item">
+                <h3 id="question-number">1</h3>
+                <p>题目进度</p>
+            </div>
+            <div class="score-item">
+                <h3 id="accuracy">0%</h3>
+                <p>正确率</p>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        
+        <div class="question-container" id="question-container">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-primary" id="submit-btn" onclick="checkAnswer()">提交答案</button>
+            <button class="btn btn-secondary" id="next-btn" onclick="nextQuestion()" style="display: none;">下一题</button>
+            <button class="btn btn-secondary" id="restart-btn" onclick="restartGame()" style="display: none;">重新开始</button>
+        </div>
+        
+        <div id="result-message" class="result-message" style="display: none;"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                type: "Python基础",
+                question: "在Python中，下列哪个是正确的变量命名方式？",
+                options: ["2variable", "my-variable", "my_variable", "my variable"],
+                correct: 2,
+                explanation: "Python变量命名使用下划线连接，不能以数字开头，不能包含空格或连字符。"
+            },
+            {
+                type: "数据分析",
+                question: "在pandas中，如何读取CSV文件？",
+                code: "import pandas as pd\n# 读取financial_data.csv文件\ndata = ?",
+                options: ["pd.read_csv('financial_data.csv')", "pd.load_csv('financial_data.csv')", "pd.import_csv('financial_data.csv')", "pd.open_csv('financial_data.csv')"],
+                correct: 0,
+                explanation: "pd.read_csv()是pandas中读取CSV文件的标准方法。"
+            },
+            {
+                type: "机器学习",
+                question: "在scikit-learn中，哪个方法用于训练模型？",
+                code: "from sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\n# 训练模型\nmodel.?(X_train, y_train)",
+                options: ["train()", "fit()", "learn()", "build()"],
+                correct: 1,
+                explanation: "fit()方法用于训练scikit-learn中的机器学习模型。"
+            },
+            {
+                type: "金融数据分析",
+                question: "计算股票收益率的正确公式是什么？",
+                code: "# 假设有股票价格数据\nprices = [100, 105, 102, 108]\n# 计算收益率\nreturns = ?",
+                options: [
+                    "(prices[1:] - prices[:-1]) / prices[:-1]",
+                    "(prices[:-1] - prices[1:]) / prices[1:]", 
+                    "prices[1:] / prices[:-1]",
+                    "prices[:-1] - prices[1:]"
+                ],
+                correct: 0,
+                explanation: "收益率 = (新价格 - 旧价格) / 旧价格，使用切片计算所有相邻价格的收益率。"
+            },
+            {
+                type: "数据可视化",
+                question: "使用matplotlib创建图表的基本步骤是？",
+                code: "import matplotlib.pyplot as plt\ndata = [1, 2, 3, 4, 5]\n# 创建并显示图表",
+                options: [
+                    "plt.plot(data); plt.show()",
+                    "plt.draw(data); plt.display()",
+                    "plt.chart(data); plt.view()",
+                    "plt.graph(data); plt.render()"
+                ],
+                correct: 0,
+                explanation: "plt.plot()用于创建图表，plt.show()用于显示图表。"
+            },
+            {
+                type: "数据处理",
+                question: "如何处理pandas DataFrame中的缺失值？",
+                code: "import pandas as pd\ndf = pd.DataFrame({'A': [1, 2, None, 4]})\n# 删除缺失值",
+                options: ["df.dropna()", "df.remove_nan()", "df.delete_null()", "df.clean_missing()"],
+                correct: 0,
+                explanation: "dropna()方法用于删除DataFrame中包含缺失值的行。"
+            },
+            {
+                type: "统计分析",
+                question: "使用numpy计算数组的标准差？",
+                code: "import numpy as np\ndata = np.array([1, 2, 3, 4, 5])\n# 计算标准差\nstd = ?",
+                options: ["np.std(data)", "np.stdev(data)", "np.standard_deviation(data)", "np.variance(data)"],
+                correct: 0,
+                explanation: "np.std()函数用于计算数组的标准差。"
+            },
+            {
+                type: "Kaggle竞赛",
+                question: "在Kaggle竞赛中，如何分割训练集和验证集？",
+                code: "from sklearn.model_selection import ?\nX_train, X_val, y_train, y_val = ?(X, y, test_size=0.2)",
+                options: ["train_test_split", "split_data", "divide_dataset", "separate_data"],
+                correct: 0,
+                explanation: "train_test_split是sklearn中用于分割数据集的标准函数。"
+            },
+            {
+                type: "深度学习",
+                question: "在TensorFlow/Keras中，如何编译模型？",
+                code: "import tensorflow as tf\nmodel = tf.keras.Sequential([...])\n# 编译模型\nmodel.?(optimizer='adam', loss='mse')",
+                options: ["compile", "build", "configure", "setup"],
+                correct: 0,
+                explanation: "compile()方法用于配置Keras模型的优化器、损失函数等。"
+            },
+            {
+                type: "金融建模",
+                question: "计算投资组合的夏普比率需要哪些参数？",
+                options: [
+                    "收益率、无风险利率、标准差",
+                    "价格、成交量、时间",
+                    "开盘价、收盘价、最高价",
+                    "买入价、卖出价、手续费"
+                ],
+                correct: 0,
+                explanation: "夏普比率 = (投资组合收益率 - 无风险利率) / 投资组合标准差"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answeredQuestions = 0;
+        let correctAnswers = 0;
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('question-container');
+            
+            let html = `
+                <div class="question-type">${question.type}</div>
+                <div class="question">
+                    <h3>${question.question}</h3>
+            `;
+            
+            if (question.code) {
+                html += `<div class="code-block">${question.code}</div>`;
+            }
+            
+            html += `<div class="options">`;
+            
+            question.options.forEach((option, index) => {
+                html += `<div class="option" onclick="selectOption(${index})">${option}</div>`;
+            });
+            
+            html += `</div></div>`;
+            
+            container.innerHTML = html;
+            
+            // Update progress
+            document.getElementById('question-number').textContent = `${currentQuestion + 1}/${questions.length}`;
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            
+            // Reset buttons
+            document.getElementById('submit-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('result-message').style.display = 'none';
+            selectedAnswer = null;
+        }
+
+        function selectOption(index) {
+            selectedAnswer = index;
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.remove('selected');
+                if (i === index) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        function checkAnswer() {
+            if (selectedAnswer === null) {
+                alert('请选择一个答案！');
+                return;
+            }
+            
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const resultMessage = document.getElementById('result-message');
+            
+            answeredQuestions++;
+            
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedAnswer && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedAnswer === question.correct) {
+                score += 10;
+                correctAnswers++;
+                resultMessage.innerHTML = `
+                    <div class="correct">
+                        ✅ 回答正确！+10分<br>
+                        <small>${question.explanation}</small>
+                    </div>
+                `;
+                resultMessage.className = 'result-message correct';
+            } else {
+                resultMessage.innerHTML = `
+                    <div class="incorrect">
+                        ❌ 回答错误！<br>
+                        <small>正确答案：${question.options[question.correct]}<br>
+                        ${question.explanation}</small>
+                    </div>
+                `;
+                resultMessage.className = 'result-message incorrect';
+            }
+            
+            resultMessage.style.display = 'block';
+            
+            // Update score and accuracy
+            document.getElementById('current-score').textContent = score;
+            const accuracy = Math.round((correctAnswers / answeredQuestions) * 100);
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+            
+            // Show next button or finish game
+            document.getElementById('submit-btn').style.display = 'none';
+            if (currentQuestion < questions.length - 1) {
+                document.getElementById('next-btn').style.display = 'inline-block';
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showFinalScore() {
+            const accuracy = Math.round((correctAnswers / answeredQuestions) * 100);
+            let message = '';
+            let emoji = '';
+            
+            if (accuracy >= 90) {
+                message = 'Python大师！你的数据分析技能非常出色！';
+                emoji = '🏆';
+            } else if (accuracy >= 80) {
+                message = 'Python专家！继续保持，你很棒！';
+                emoji = '🥇';
+            } else if (accuracy >= 70) {
+                message = 'Python高手！还有提升空间，加油！';
+                emoji = '🥈';
+            } else if (accuracy >= 60) {
+                message = 'Python学习者！继续努力，你会更好的！';
+                emoji = '🥉';
+            } else {
+                message = 'Python新手！多练习，相信你会进步的！';
+                emoji = '📚';
+            }
+            
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="final-score">
+                    <h2>${emoji} 游戏结束！</h2>
+                    <h3>最终得分：${score}/${questions.length * 10}</h3>
+                    <h3>正确率：${accuracy}%</h3>
+                    <p style="margin-top: 15px; font-size: 1.1em;">${message}</p>
+                    <p style="margin-top: 10px; color: #e2e8f0;">
+                        感谢参与Python数据分析学习游戏！<br>
+                        继续你的数据科学和机器学习学习之旅吧！
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'inline-block';
+            document.getElementById('progress-fill').style.width = '100%';
+        }
+
+        function restartGame() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            answeredQuestions = 0;
+            correctAnswers = 0;
+            
+            document.getElementById('current-score').textContent = '0';
+            document.getElementById('accuracy').textContent = '0%';
+            document.getElementById('restart-btn').style.display = 'none';
+            
+            loadQuestion();
+        }
+
+        // Initialize game
+        loadQuestion();
+    </script>
+</body>
+</html> 
