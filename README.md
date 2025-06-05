@@ -1,5 +1,3 @@
-
-
 ![Github Forks](https://img.shields.io/github/forks/senli1073/senli1073.github.io?style=flat)
 ![Github Stars](https://img.shields.io/github/stars/senli1073/senli1073.github.io?style=flat)
 ![License](https://img.shields.io/github/license/senli1073/senli1073.github.io)
@@ -23,9 +21,9 @@ This template supports LaTeX formula input. You can use `$...$` and `\(...\)` as
 
 
 ## Getting Start
+
 ### 1. Fork this repository
 The repository name should be `<username>.github.io`, which will also be your website's URL.
-
 
 ### 2. Edit page content
 
@@ -57,12 +55,9 @@ git commit -am 'init'
 git push
 ```
 
-
 ### 3. Enjoy
 
 Fire up a browser and go to `https://<username>.github.io`
-
-
 
 ## License
 

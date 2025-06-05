@@ -1,12 +1,33 @@
-- <strong>S. Li</strong>, X. Yang*, A. Cao*, K. Fan, Y. Liu, C. Wang, and Q.Niu . LaNCoR: Label Noise-Contrastive Robust Learning for Seismic Signal Processing with Application to Microseismic Arrival Time Picking. <strong>In Revision.</strong> [[Code]](https://github.com/senli1073/LaNCor)
+#### Data Science Projects
 
-- X. Yang, <strong>S. Li</strong>, A. Cao*, C. Wang*, Y. Liu, X. Bai, and Q. Niu (2024). Deep Transfer Learning for P-wave Arrival Identification and Automatic Seismic Source Location in Underground Mines. <strong>International Journal of Rock Mechanics and Mining Sciences</strong>. [[Paper]](https://doi.org/10.1016/j.ijrmms.2024.105888)
+**Kaggle Competition Participation**
+- Active participant in various data analysis competitions on [Kaggle](https://www.kaggle.com/xinruwang)
+- Applied machine learning techniques to solve real-world business problems
+- Demonstrated proficiency in data preprocessing, feature engineering, and model selection
+- Collaborated with global data science community to develop innovative solutions
 
-- <strong>S. Li</strong>, X. Yang*, A. Cao*, C. Wang, Y. Liu, Y. Liu, and Q. Niu (2024). SeisT: A Foundational Deep-Learning Model for Earthquake Monitoring Tasks. <strong>IEEE Transactions on Geoscience and Remote Sensing</strong>. [[Paper]](https://doi.org/10.1109/TGRS.2024.3371503) [[Code]](https://github.com/senli1073/SeisT)
+**Academic Research Projects**
+- **Business Analytics Capstone Project** (University of Sydney, 2023)
+  - Developed predictive models for business decision-making
+  - Applied advanced statistical methods and machine learning algorithms
+  - Presented findings to industry stakeholders
 
-- A. Cao, X. Yang, C. Wang*, <strong>S. Li</strong>, Y. Liu, L. Dou, and Q. Niu (2023). High-Precision Phase Picking and Automatic Source Locating Method for Seismicity in Mines Based on Deep Transfer Learning. <strong>Journal of China Coal Society</strong>. [[Paper]](https://doi.org/10.13225/j.cnki.jccs.2023.0095)
+- **Financial Data Analysis** (University of Newcastle, 2021)
+  - Analyzed financial market trends using quantitative methods
+  - Implemented risk assessment models for investment portfolios
+  - Utilized statistical software for comprehensive data analysis
 
-- A. Cao, Y. Liu, X. Yang*, <strong>S. Li</strong>, C. Wang, X. Bai, and Y. Liu (2022). Physical Index and Data Fusion-Driven Method for Coal Burst Prediction in Time Sequence. <strong>Journal of China Coal Society</strong>. [[Paper]](https://doi.org/10.13225/j.cnki.jccs.2022.0680)
+#### Technical Skills
+- **Programming Languages:** Python, R, SQL
+- **Machine Learning:** Scikit-learn, TensorFlow, PyTorch
+- **Data Visualization:** Matplotlib, Seaborn, Plotly, Tableau
+- **Statistical Analysis:** Advanced statistical modeling and hypothesis testing
+- **Database Management:** SQL Server, MySQL, PostgreSQL
+- **Business Intelligence:** Power BI, Excel Advanced Analytics
 
-- X. Yang, X. Yu, C. Zhang, <strong>S. Li</strong>, and Q. Niu (2021). MineGPS: Battery-Free Localization Base Station for Coal Mine Environment. <strong>IEEE Communications Letters</strong>. [[Paper]](https://doi.org/10.1109/LCOMM.2021.3081593)
+#### Future Research Directions
+- Integration of AI techniques in seismological data analysis
+- Development of deep learning models for geological pattern recognition
+- Application of machine learning in financial risk assessment
+- Exploration of natural language processing for business intelligence
 
