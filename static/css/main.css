@@ -52,15 +52,19 @@ section .main-body{
     font-size: 1.3rem;
     font-weight: 200;
     line-height: 2.4rem;
+    min-height: 100px;
+    padding: 20px 0;
 }
 
 
 .bg-gradient-primary-to-secondary-light {
     background: linear-gradient(45deg, #fcfcfc, #ffffff) !important;
+    padding: 60px 0;
 }
 
 .bg-gradient-primary-to-secondary-gray {
     background: linear-gradient(45deg, #f0f0f0, #f1f1f1) !important;
+    padding: 60px 0;
 }
 
 
@@ -107,6 +111,15 @@ section .main-body{
     #avatar {
         margin: 0;
     }
+}
+
+/* Additional utility classes */
+.mt5 {
+    margin-top: 3rem;
+}
+
+.md5 {
+    margin-bottom: 3rem;
 }
 
 
